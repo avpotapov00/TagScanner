@@ -1,0 +1,7 @@
+/gradlew
+/build/
+/.gradle/
+/.idea/
+/gradlew.bat
+/src/main/resources/private.properties
+/gradle/
