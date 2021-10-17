@@ -16,15 +16,17 @@ import org.junit.jupiter.api.assertThrows
 
 internal class KtorRestClientTest {
 
+    private val serverPort = 8888
+
     @Test
-    fun shouldResponse() {
+    fun shouldResponse(): Unit = runBlocking {
         val client = KtorRestClient(1000)
         withMockServer { server ->
             whenHttp(server)
                 .match(method(Method.GET), startsWithUri("/check"))
                 .then(stringContent("ok"))
 
-            val response = client.request { url("http://localhost:$port/ping") }
+            val response = client.request { url("http://localhost:$serverPort/check") }
             assertEquals(HttpStatusCode.OK, response.status)
             assertEquals("ok", response.content)
         }
@@ -35,18 +37,19 @@ internal class KtorRestClientTest {
         val client = KtorRestClient(100)
         assertThrows<HttpRequestTimeoutException> {
             runBlocking {
-                client.request { url("http://localhost:$port/ping") }
+                client.request { url("http://localhost:$serverPort/ping") }
             }
         }
     }
 
     private fun withMockServer(block: suspend (StubServer) -> Unit) = runBlocking {
-        val port = 8888
-        val server = StubServer(port)
+        val server = StubServer(serverPort)
         server.start()
         try {
             block.invoke(server)
         } catch (e: Exception) {
+            throw e
+        } finally {
             server.stop()
         }
     }

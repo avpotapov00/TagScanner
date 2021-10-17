@@ -23,10 +23,10 @@ dependencies {
     implementation("ch.qos.logback:logback-classic:1.2.6")
     implementation("org.jetbrains.kotlin:kotlin-reflect:1.5.31")
 
-    testImplementation(kotlin("test"))
+    testImplementation("org.jetbrains.kotlin:kotlin-test:1.5.31")
     testImplementation("org.mockito.kotlin:mockito-kotlin:3.2.0")
-    testImplementation("com.xebialabs.restito:restito:0.9.3")
-    testImplementation("io.mockk:mockk:1.9.3")
+    testImplementation("com.xebialabs.restito:restito:0.9.4")
+    testImplementation("io.mockk:mockk:1.12.0")
 }
 
 tasks.test {

@@ -15,8 +15,3 @@ fun intervalsBack(n: Int): List<TimeInterval> {
         .windowed(2)
         .map { (start, end) -> TimeInterval(start, end) }
 }
-
-private val zone: ZoneOffset = ZoneOffset.of("+03:00")
-fun LocalDateTime.toUnixTime(): Long {
-    return this.toEpochSecond(zone)
-}
